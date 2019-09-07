@@ -39,7 +39,7 @@ const App = () => {
         let countryCapital = filteredCountries[0].capital;
         axios
           .get(
-            `http://api.apixu.com/v1/current.json?key=39c19e120a834f79a5d182145193108&q=${countryCapital}`
+            `https://api.apixu.com/v1/current.json?key=39c19e120a834f79a5d182145193108&q=${countryCapital}`
           )
           .then(res => {
             setTemp(res.data.current.feelslike_c);
