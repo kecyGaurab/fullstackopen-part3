@@ -21,8 +21,22 @@ let persons = [
         "name": "Mary Poppendieck", 
         "number": "39-23-6423122",
         "id": 4
-      }
+      },
+      { 
+        "name": "Charles Babbage", 
+        "number": "45-23-6445962",
+        "id": 5
+      },
+
 ]
+
+app.get('/info',(req,res) => {
+    let contactNumber = persons.length;
+    let dateCreated = new Date();
+    const info = `<p>Phonebook has info for ${contactNumber} people</p>
+    <p>${dateCreated}</p>`
+    res.send(info)
+})
 
 app.get('/api/persons',(req,res) => {
     res.json(persons)
