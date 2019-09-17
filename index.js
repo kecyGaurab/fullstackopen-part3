@@ -30,17 +30,32 @@ let persons = [
 
 ]
 
+//gets the complete data 
+app.get('/api/persons',(req,res) => {
+    res.json(persons)
+})
+
+//get the info page that displays information of when the request is processed
 app.get('/info',(req,res) => {
-    let contactNumber = persons.length;
-    let dateCreated = new Date();
+    const contactNumber = persons.length;
+    const dateCreated = new Date();
     const info = `<p>Phonebook has info for ${contactNumber} people</p>
     <p>${dateCreated}</p>`
     res.send(info)
 })
 
-app.get('/api/persons',(req,res) => {
-    res.json(persons)
-})
+//get single phonebook entry specified with the id
+app.get('/api/persons/:id',(req,res) =>{
+    const id = Number(req.params.id)
+    const person = persons.find(person => person.id === id)
+
+    if(person){
+        res.json(person)
+    } else {
+        res.status(404).end()
+    }
+}
+)
 
 const PORT = 3001 
 app.listen(PORT)
