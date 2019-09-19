@@ -1,8 +1,16 @@
 const express = require('express');
 const app = express();
+const morgan = require('morgan');
 const bodyParser = require('body-parser');
 
-app.use(bodyParser.json())
+app.use(bodyParser.json());
+//creating custom token 
+morgan.token('reqSent', (req, res) => {
+  return JSON.stringify(req.body);
+});
+app.use(
+  morgan(':method :url :status :res[content-length] - :response-time ms :reqSent')
+);
 
 let persons = [
   {
@@ -37,7 +45,7 @@ app.get('/api/persons', (req, res) => {
   res.json(persons);
 });
 
-//get the info page that displays information of when the request is processed
+//gets the info page that displays information of when the request is processed
 app.get('/info', (req, res) => {
   const contactNumber = persons.length;
   const dateCreated = new Date();
@@ -46,7 +54,7 @@ app.get('/info', (req, res) => {
   res.send(info);
 });
 
-//get single phonebook entry specified with the id
+//gets single phonebook entry specified with the id
 app.get('/api/persons/:id', (req, res) => {
   const id = Number(req.params.id);
   const person = persons.find(person => person.id === id);
@@ -69,22 +77,20 @@ const generateId = () => Math.floor(Math.random() * 99999);
 
 app.post('/api/persons', (req, res) => {
   const body = req.body;
-  const contactExist = persons.filter(person => person.name === body.name)
+  const contactExist = persons.filter(person => person.name === body.name);
 
   if (!body.name) {
     return res.status(400).json({
       error: 'name is missing',
     });
-  }
-  else if(!body.number) {
+  } else if (!body.number) {
     return res.status(400).json({
-      error:'number is missing',
+      error: 'number is missing',
     });
-  }
-  else if(contactExist.length > 0){
+  } else if (contactExist.length > 0) {
     return res.status(400).json({
-      error:'name must be unique',
-    })
+      error: 'name must be unique',
+    });
   }
 
   const person = {
