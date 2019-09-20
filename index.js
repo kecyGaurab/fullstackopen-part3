@@ -50,7 +50,7 @@ app.get('/api/persons', (req, res) => {
 });
 
 //gets the info page that displays information of when the request is processed
-app.get('/info', (req, res) => {
+app.get('api/info', (req, res) => {
   const contactNumber = persons.length;
   const dateCreated = new Date();
   const info = `<p>Phonebook has info for ${contactNumber} people</p>
