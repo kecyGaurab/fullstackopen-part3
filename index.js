@@ -5,7 +5,9 @@ const bodyParser = require('body-parser');
 const cors = require('cors')
 
 app.use(cors())
+
 app.use(express.static('build'))
+
 
 app.use(bodyParser.json());
 //creating custom token 
@@ -106,7 +108,9 @@ app.post('/api/persons', (req, res) => {
   res.json(person);
 });
 
+
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
+
