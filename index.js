@@ -6,6 +6,9 @@ const cors = require('cors')
 
 app.use(cors())
 
+app.use(express.static('build'))
+
+
 app.use(bodyParser.json());
 //creating custom token 
 morgan.token('reqSent', (req, res) => {
@@ -49,7 +52,7 @@ app.get('/api/persons', (req, res) => {
 });
 
 //gets the info page that displays information of when the request is processed
-app.get('/info', (req, res) => {
+app.get('api/info', (req, res) => {
   const contactNumber = persons.length;
   const dateCreated = new Date();
   const info = `<p>Phonebook has info for ${contactNumber} people</p>
@@ -105,6 +108,9 @@ app.post('/api/persons', (req, res) => {
   res.json(person);
 });
 
-const PORT = process.env.PORT || 3001;
-app.listen(PORT);
-console.log(`Server running on port ${PORT}`);
+
+const PORT = process.env.PORT || 3001
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`)
+})
+
